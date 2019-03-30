@@ -1,0 +1,12 @@
+[submodule "thirdparty/boost"]
+	path = thirdparty/boost
+	url = https://github.com/boostorg/boost.git
+[submodule "thirdparty/rang"]
+	path = thirdparty/rang
+	url = https://github.com/agauniyal/rang.git
+[submodule "thirdparty/googletest"]
+	path = thirdparty/googletest
+	url = https://github.com/google/googletest.git
+[submodule "thirdparty/eigen-git-mirror"]
+	path = thirdparty/eigen
+	url = https://github.com/eigenteam/eigen-git-mirror.git
