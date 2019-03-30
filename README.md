@@ -7,15 +7,13 @@ Rubik's Cube implementation in C++ using linear algebra.
 ##### Windows
 
 ```
-cd thirdparty/boost
-bootstrap
-.\b2 headers
+setup init
+setup release
 ```
 
 ##### Unix
 
 ```
-cd thirdparty/boost
-./bootstrap.sh
-./b2 headers
+./setup.sh init
+./setup.sh release
 ```
