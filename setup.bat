@@ -6,7 +6,7 @@ IF "%~1"=="clean" GOTO clean
 GOTO done
 
 :init
-git submodules update --init --recursive
+git submodule update --init --recursive
 cd thirdparty/boost
 .\bootstrap
 b2 headers

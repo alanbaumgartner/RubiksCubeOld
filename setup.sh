@@ -2,7 +2,7 @@
 
 if [ $1 = "init" ]
 then
-git submodules update --init --recursive
+git submodule update --init --recursive
 cd thirdparty/boost
 ./bootstrap.sh
 ./b2 headers
