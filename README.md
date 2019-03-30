@@ -6,12 +6,16 @@ Rubik's Cube implementation in C++ using linear algebra.
 
 ##### Windows
 
+Compiling on Windows requires MSVC 2017.
+
 ```
 setup init
 setup release
 ```
 
 ##### Unix
+
+Compiling on Unix requires Git, GCC, and CMake.
 
 ```
 ./setup.sh init
