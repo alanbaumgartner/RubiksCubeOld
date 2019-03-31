@@ -6,9 +6,6 @@
 #include <iostream>
 #include <rang.hpp>
 
-#define CCTURN(a, b) ((2 - ((a + b) / 3)) + (((a + b) % 3) * 3))
-#define CWTURN(a, b) ((6 + ((a + b) / 3)) - (((a + b) % 3) * 3))
-
 Cube::Cube() {
   SetupPieces();
 
@@ -479,11 +476,7 @@ void Cube::ZI() {
 
 void Cube::Randomize() {
   for (int i = 0; i < 999; i++) {
-    auto& ibi = func_map_.get<IndexByIndex>();
-    auto found = ibi.find(rand() % 48);
-    if (found != ibi.end()) {
-      (this->*found->func)();
-    }
+    call_func_index(rand() % 48);
   }
   std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
 }
@@ -497,6 +490,32 @@ double Cube::Score() {
 bool Cube::Solved() {
   return Score() == 1;
 }
+
+std::string Cube::get_func_name(int index) {
+  auto& ibi = func_map_.get<IndexByIndex>();
+  auto found = ibi.find(index);
+  if (found != ibi.end()) {
+    return found->name;
+  }
+}
+
+void Cube::call_func_index(int index) {
+  auto& ibi = func_map_.get<IndexByIndex>();
+  auto found = ibi.find(index);
+  if (found != ibi.end()) {
+    (this->*found->func)();
+  }
+  std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
+}
+
+void Cube::call_func_string(std::string name) {
+  auto& ibn = func_map_.get<IndexByName>();
+  auto found = ibn.find(name);
+  if (found != ibn.end()) {
+    (this->*found->func)();
+  }
+}
+
 
 bool Cube::InPlane(Piece * piece, const Eigen::Vector3i * plane) {
   return piece->get_pos().dot(*plane) > 0;

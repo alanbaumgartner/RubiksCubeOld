@@ -83,8 +83,14 @@ class Cube {
     return pieces_;
   }
 
+  std::string get_func_name(int index);
+  void call_func_index(int index);
+  void call_func_string(std::string name);
+  
+  std::string SideString(const Eigen::Vector3i * side, int pos);
+
  private:
-  typedef void (Cube::*func_ptr)();
+   typedef void (Cube::*func_ptr)();
 
   struct func_struct {
     int index;
@@ -120,7 +126,6 @@ class Cube {
   void ResetPieces();
 
   double SideScore(const Eigen::Vector3i * side, int pos);
-  std::string SideString(const Eigen::Vector3i * side, int pos);
 
   void SetupPieces();
 };

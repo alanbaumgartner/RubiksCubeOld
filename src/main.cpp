@@ -1,9 +1,17 @@
 // Copyright 2019 Alan Victor Baumgartner
 
-#include <iostream>
-#include "cube.hpp"
+#include <QApplication>
+#include "gui.hpp"
 
-int main() {
-    Cube * c = new Cube();
-    c->Play();
+int main(int argc, char *argv[]) {
+    
+  QApplication app(argc, argv);  
+
+  Gui window;
+
+  window.resize(567, 262);
+  window.setWindowTitle("Rubiks Cube");
+  window.show();
+  
+  return app.exec();
 }

@@ -5,6 +5,9 @@
 #include <Eigen/Eigen>
 #include <cmath>
 
+#define CCTURN(a, b) ((2 - ((a + b) / 3)) + (((a + b) % 3) * 3))
+#define CWTURN(a, b) ((6 + ((a + b) / 3)) - (((a + b) % 3) * 3))
+
 const double PI = atan(1.0)*4;
 const double TWO_RAD = PI/2;
 
