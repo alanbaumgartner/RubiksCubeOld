@@ -16,19 +16,19 @@ Cube::Cube() {
   func_map_.insert({4, "F", &Cube::F});
   func_map_.insert({5, "B", &Cube::B});
 
-  func_map_.insert({6, "U2", &Cube::U2});
-  func_map_.insert({7, "D2", &Cube::D2});
-  func_map_.insert({8, "L2", &Cube::L2});
-  func_map_.insert({9, "R2", &Cube::R2});
-  func_map_.insert({10, "F2", &Cube::F2});
-  func_map_.insert({11, "B2", &Cube::B2});
+  func_map_.insert({6, "UI", &Cube::UI});
+  func_map_.insert({7, "DI", &Cube::DI});
+  func_map_.insert({8, "LI", &Cube::LI});
+  func_map_.insert({9, "RI", &Cube::RI});
+  func_map_.insert({10, "FI", &Cube::FI});
+  func_map_.insert({1, "BI", &Cube::BI});
 
-  func_map_.insert({12, "UI", &Cube::UI});
-  func_map_.insert({13, "DI", &Cube::DI});
-  func_map_.insert({14, "LI", &Cube::LI});
-  func_map_.insert({15, "RI", &Cube::RI});
-  func_map_.insert({16, "FI", &Cube::FI});
-  func_map_.insert({17, "BI", &Cube::BI});
+  func_map_.insert({12, "U2", &Cube::U2});
+  func_map_.insert({13, "D2", &Cube::D2});
+  func_map_.insert({14, "L2", &Cube::L2});
+  func_map_.insert({15, "R2", &Cube::R2});
+  func_map_.insert({16, "F2", &Cube::F2});
+  func_map_.insert({17, "B2", &Cube::B2});
 
   func_map_.insert({18, "u", &Cube::u});
   func_map_.insert({19, "d", &Cube::d});
@@ -37,19 +37,19 @@ Cube::Cube() {
   func_map_.insert({22, "f", &Cube::f});
   func_map_.insert({23, "b", &Cube::b});
 
-  func_map_.insert({24, "u2", &Cube::u2});
-  func_map_.insert({25, "d2", &Cube::d2});
-  func_map_.insert({26, "l2", &Cube::l2});
-  func_map_.insert({27, "r2", &Cube::r2});
-  func_map_.insert({28, "f2", &Cube::f2});
-  func_map_.insert({29, "b2", &Cube::b2});
+  func_map_.insert({24, "ui", &Cube::ui});
+  func_map_.insert({25, "di", &Cube::di});
+  func_map_.insert({26, "li", &Cube::li});
+  func_map_.insert({27, "ri", &Cube::ri});
+  func_map_.insert({28, "fi", &Cube::fi});
+  func_map_.insert({29, "bi", &Cube::bi});
 
-  func_map_.insert({30, "ui", &Cube::ui});
-  func_map_.insert({31, "di", &Cube::di});
-  func_map_.insert({32, "li", &Cube::li});
-  func_map_.insert({33, "ri", &Cube::ri});
-  func_map_.insert({34, "fi", &Cube::fi});
-  func_map_.insert({35, "bi", &Cube::bi});
+  func_map_.insert({30, "u2", &Cube::u2});
+  func_map_.insert({31, "d2", &Cube::d2});
+  func_map_.insert({32, "l2", &Cube::l2});
+  func_map_.insert({33, "r2", &Cube::r2});
+  func_map_.insert({34, "f2", &Cube::f2});
+  func_map_.insert({35, "b2", &Cube::b2});
 
   func_map_.insert({36, "M", &Cube::M});
   func_map_.insert({37, "MI", &Cube::MI});
@@ -75,7 +75,7 @@ Cube::~Cube() {
 }
 
 void Cube::Print() {
-  std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
+  sort();
   std::string up = SideString(&UP, 1);
   std::string down = SideString(&DOWN, 1);
   std::string left = SideString(&LEFT, 0);
@@ -474,6 +474,49 @@ void Cube::ZI() {
   // }
 }
 
+std::string Cube::get_colors() {
+    sort();
+    std::string up = SideString(&UP, 1);
+    std::string down = SideString(&DOWN, 1);
+    std::string left = SideString(&LEFT, 0);
+    std::string right = SideString(&RIGHT, 0);
+    std::string front = SideString(&FRONT, 2);
+    std::string back = SideString(&BACK, 2);
+
+    std::string colors = "";
+
+    for (int i = 0; i < 9; i+=3) {
+        colors += back.at(CWTURN(i % 9, 2));
+        colors += back.at(CWTURN(i % 9, 1));
+        colors +=  back.at(CWTURN(i % 9, 0));
+    }
+
+    for (int i = 9; i < 45; i+=12) {
+        colors += left.at(CWTURN(i % 9, 2));
+        colors += left.at(CWTURN(i % 9, 1));
+        colors += left.at(CWTURN(i % 9, 0));
+
+        colors += up.at(CWTURN(i % 9, 2));
+        colors += up.at(CWTURN(i % 9, 1));
+        colors += up.at(CWTURN(i % 9, 0));
+
+        colors += right.at(CWTURN(i % 9, 0));
+        colors += right.at(CWTURN(i % 9, 1));
+        colors += right.at(CWTURN(i % 9, 2));
+
+        colors += down.at(CWTURN(i % 9, 2));
+        colors += down.at(CWTURN(i % 9, 1));
+        colors += down.at(CWTURN(i % 9, 0));
+    }
+
+    for (int i = 45; i < 54; i+=3) {
+        colors += front.at(CCTURN(i % 9, 0));
+        colors += front.at(CCTURN(i % 9, 1));
+        colors += front.at(CCTURN(i % 9, 2));
+    }
+    return colors;
+}
+
 void Cube::Randomize() {
   for (int i = 0; i < 999; i++) {
     call_func_index(rand() % 48);
@@ -491,6 +534,10 @@ bool Cube::Solved() {
   return Score() == 1;
 }
 
+void Cube::sort() {
+  std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
+}
+
 std::string Cube::get_func_name(int index) {
   auto& ibi = func_map_.get<IndexByIndex>();
   auto found = ibi.find(index);
@@ -505,7 +552,6 @@ void Cube::call_func_index(int index) {
   if (found != ibi.end()) {
     (this->*found->func)();
   }
-  std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
 }
 
 void Cube::call_func_string(std::string name) {

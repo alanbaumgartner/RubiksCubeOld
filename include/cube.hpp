@@ -75,6 +75,9 @@ class Cube {
   void Z();
   void ZI();
 
+  std::string get_colors();
+
+  void ResetPieces();
   void Randomize();
   double Score();
   bool Solved();
@@ -83,11 +86,12 @@ class Cube {
     return pieces_;
   }
 
+  void sort();
+
   std::string get_func_name(int index);
   void call_func_index(int index);
   void call_func_string(std::string name);
-  
-  std::string SideString(const Eigen::Vector3i * side, int pos);
+
 
  private:
    typedef void (Cube::*func_ptr)();
@@ -123,9 +127,9 @@ class Cube {
   int populate_map(const Eigen::Vector3i * plane, int position);
 
   void PrintPiece(char color);
-  void ResetPieces();
 
   double SideScore(const Eigen::Vector3i * side, int pos);
+  std::string SideString(const Eigen::Vector3i * side, int pos);
 
   void SetupPieces();
 };

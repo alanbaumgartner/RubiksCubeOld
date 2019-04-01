@@ -6,18 +6,19 @@ Rubik's Cube implementation in C++ using linear algebra.
 
 ##### Windows
 
-Compiling on Windows requires Git, CMake and MSVC 2017.
+Compiling on Windows requires Python3, Git, CMake and MSVC 2017.
+In a MSVC terminal run the following.
 
 ```
-setup init
-setup release
+python3 setup.py init
+python3 setup.py release
 ```
 
 ##### Unix
 
-Compiling on Unix requires Git, CMake, Make and GCC.
+Compiling on Unix requires Python3, Git, CMake, Make and GCC.
 
 ```
-./setup.sh init
-./setup.sh release
+python3 setup.py init
+python3 setup.py release
 ```

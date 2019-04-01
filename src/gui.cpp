@@ -1,5 +1,5 @@
-#include <QGridLayout>
-#include <iostream>
+// Copyright 2019 Alan Victor Baumgartner
+
 #include <string>
 #include "common.hpp"
 #include "gui.hpp"
@@ -8,6 +8,14 @@ Gui::Gui(QWidget *parent)
     : QWidget(parent) {
 
     cube = new Cube();
+
+    random = new QPushButton("Random", this); 
+    random->setGeometry(255 - 52, 6 * 32 + 5, 48, 28);
+    connect(random, &QPushButton::clicked, this, [this]{ randomize_cube(); });
+    
+    reset = new QPushButton("Reset", this);
+    reset->setGeometry(255 - 52, 7 * 32 + 5, 48, 28);
+    connect(reset, &QPushButton::clicked, this, [this]{ reset_cube(); });
 
     for (int i = 0; i < 9; i++) {
         sides[i] = new QLabel(this); 
@@ -34,9 +42,7 @@ Gui::Gui(QWidget *parent)
         buttons[i]->setGeometry((i % 6 * 52) + 255, (i / 6 * 32) + 5, 48, 28);
         connect(buttons[i], &QPushButton::clicked, this, [=, this]{ handle_button(i); });
     }
-
-    
-
+    update_cube();
 }
 
 void Gui::handle_button(int index) {
@@ -44,70 +50,45 @@ void Gui::handle_button(int index) {
     update_cube();
 }
 
+void Gui::reset_cube() {
+    cube->ResetPieces();
+    update_cube();
+}
+
+void Gui::randomize_cube() {
+    cube->Randomize();
+    update_cube();
+}
+
 void Gui::update_cube() {
-    std::string up = cube->SideString(&UP, 1);
-    std::string down = cube->SideString(&DOWN, 1);
-    std::string left = cube->SideString(&LEFT, 0);
-    std::string right = cube->SideString(&RIGHT, 0);
-    std::string front = cube->SideString(&FRONT, 2);
-    std::string back = cube->SideString(&BACK, 2);
-
-    for (int i = 0; i < 9; i+=3) {
-        set_color(i, back.at(CWTURN(i % 9, 2)));
-        set_color(i + 1, back.at(CWTURN(i % 9, 1)));
-        set_color(i + 2, back.at(CWTURN(i % 9, 0)));
-    }
-
-    for (int i = 9; i < 45; i+=12) {
-        set_color(i, left.at(CWTURN(i % 9, 2)));
-        set_color(i + 1, left.at(CWTURN(i % 9, 1)));
-        set_color(i + 2, left.at(CWTURN(i % 9, 0)));
-
-        set_color(i + 3, up.at(CWTURN(i % 9, 2)));
-        set_color(i + 4, up.at(CWTURN(i % 9, 1)));
-        set_color(i + 5, up.at(CWTURN(i % 9, 0)));
-
-        set_color(i + 6, right.at(CWTURN(i % 9, 0)));
-        set_color(i + 7, right.at(CWTURN(i % 9, 1)));
-        set_color(i + 8, right.at(CWTURN(i % 9, 2)));
-
-        set_color(i + 9, down.at(CWTURN(i % 9, 2)));
-        set_color(i + 10, down.at(CWTURN(i % 9, 1)));
-        set_color(i + 11, down.at(CWTURN(i % 9, 0)));
-    }
-
-    for (int i = 45; i < 54; i+=3) {
-        set_color(i, front.at(CCTURN(i % 9, 0)));
-        set_color(i + 1, front.at(CCTURN(i % 9, 1)));
-        set_color(i + 2, front.at(CCTURN(i % 9, 2)));
+    std::string colors = cube->get_colors();
+    for (int i = 0; i < 54; i++) {
+        set_color(i, colors.at(i));
     }
 }
 
 void Gui::set_color(int index, char color) {
+    QString qstr = "QLabel { background-color : ";
     switch (color) {
         case '1':
-            sides[index]->setStyleSheet("QLabel { background-color : gray;}");
-            sides[index]->update();
+            qstr += "gray;}";
             break;
         case '2':
-            sides[index]->setStyleSheet("QLabel { background-color : yellow;}");
-            sides[index]->update();
+            qstr += "yellow;}";
             break;
         case '3':
-            sides[index]->setStyleSheet("QLabel { background-color : orange;}");
-            sides[index]->update();
+            qstr += "orange;}";
             break;
         case '4':
-            sides[index]->setStyleSheet("QLabel { background-color : red;}");
-            sides[index]->update();
+            qstr += "red;}";
             break;
         case '5':
-            sides[index]->setStyleSheet("QLabel { background-color : green;}");
-            sides[index]->update();
+            qstr += "green;}";
             break;
         case '6':
-            sides[index]->setStyleSheet("QLabel { background-color : blue;}");
-            sides[index]->update();
+            qstr += "blue;}";
             break;
     }
+    sides[index]->setStyleSheet(qstr);
+    sides[index]->update();
 }
