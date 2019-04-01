@@ -30,3 +30,5 @@ if (MSVC)
 endif (MSVC)
 
 target_link_libraries (RubiksCube Qt5::Widgets)
+
+install(SCRIPT bundle.cmake)

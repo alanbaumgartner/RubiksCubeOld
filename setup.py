@@ -19,8 +19,11 @@ def build(build_type):
 
     if platform.system() == "Windows":
         args = "cmake -G \"NMake Makefiles\"" + args
+        args2 = "mt.exe -manifest ../bin/RubiksCube.exe.manifest -outputresource:../bin/RubiksCube.exe;1"
         subprocess.run(args, shell=True)
         subprocess.run("nmake", shell=True)
+        subprocess.run(args2, shell=True)
+        os.remove("../bin/RubiksCube.exe.manifest")
     else:
         args = "cmake -G \"Unix Makefiles\"" + args
         subprocess.run(args, shell=True)
