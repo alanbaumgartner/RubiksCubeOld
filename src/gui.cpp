@@ -10,11 +10,11 @@ Gui::Gui(QWidget *parent)
     cube = new Cube();
 
     random = new QPushButton("Random", this); 
-    random->setGeometry(187, 6 * 32 + 5, 64, 28);
+    random->setGeometry(187, 4 * 32 + 5, 64, 28);
     connect(random, &QPushButton::clicked, this, [this]{ randomize_cube(); });
     
     reset = new QPushButton("Reset", this);
-    reset->setGeometry(187, 7 * 32 + 5, 64, 28);
+    reset->setGeometry(187, 5 * 32 + 5, 64, 28);
     connect(reset, &QPushButton::clicked, this, [this]{ reset_cube(); });
 
     for (int i = 0; i < 9; i++) {
@@ -35,7 +35,7 @@ Gui::Gui(QWidget *parent)
         sides[i + 45]->setGeometry((i % 3 * 20) + 65, (i / 3 * 20) + 125, 16, 16);
     }
 
-    for (int i = 0; i < 48; i++) {
+    for (int i = 0; i < 36; i++) {
         std::string str = cube->get_func_name(i);
         QString qstr = QString::fromStdString(str);
         buttons[i] = new QPushButton(qstr, this); 

@@ -9,29 +9,29 @@
 Cube::Cube() {
   SetupPieces();
 
-  std::string func_names[48] = {
+  std::string func_names[36] = {
     "U",  "D",  "L",  "R",  "F",  "B",
     "UI", "DI", "LI", "RI", "FI", "BI",
-    "U2", "D2", "L2", "R2", "F2", "B2",
+    // "U2", "D2", "L2", "R2", "F2", "B2",
     "u",  "d",  "l",  "r",  "f",  "b",
     "ui", "di", "li", "ri", "fi", "bi",
-    "u2", "d2", "l2", "r2", "f2", "b2",
+    // "u2", "d2", "l2", "r2", "f2", "b2",
     "M",  "MI", "E",  "EI", "S",  "SI",
     "X",  "XI", "Y",  "YI", "Z",  "ZI",
   };
 
-  func_ptr funcs[48] = {
+  func_ptr funcs[36] = {
     &Cube::U,  &Cube::D,  &Cube::L , &Cube::R,  &Cube::F,  &Cube::B,
     &Cube::UI, &Cube::DI, &Cube::LI, &Cube::RI, &Cube::FI, &Cube::BI,
-    &Cube::U2, &Cube::D2, &Cube::L2, &Cube::R2, &Cube::F2, &Cube::B2,
+    // &Cube::U2, &Cube::D2, &Cube::L2, &Cube::R2, &Cube::F2, &Cube::B2,
     &Cube::u,  &Cube::d,  &Cube::l,  &Cube::r,  &Cube::f,  &Cube::b,
     &Cube::ui, &Cube::di, &Cube::li, &Cube::ri, &Cube::fi, &Cube::bi,
-    &Cube::u2, &Cube::d2, &Cube::l2, &Cube::r2, &Cube::f2, &Cube::b2,
+    // &Cube::u2, &Cube::d2, &Cube::l2, &Cube::r2, &Cube::f2, &Cube::b2,
     &Cube::M,  &Cube::MI, &Cube::E,  &Cube::EI, &Cube::S,  &Cube::SI,
     &Cube::X,  &Cube::XI, &Cube::Y,  &Cube::YI, &Cube::Z,  &Cube::ZI,
   };
 
-  for (int i = 0; i < 48; i++) {
+  for (int i = 0; i < 36; i++) {
     func_map_.insert({i, func_names[i], funcs[i]});
   }
   
@@ -489,7 +489,7 @@ std::string Cube::get_colors() {
 
 void Cube::Randomize() {
   for (int i = 0; i < 999; i++) {
-    call_func_index(rand() % 48);
+    call_func_index(rand() % 36);
   }
   std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
 }

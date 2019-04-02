@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 
   Gui window;
 
-  window.resize(567, 262);
+  window.resize(567, 198);
   window.setWindowTitle("Rubiks Cube");
   window.show();
   
