@@ -9,6 +9,62 @@
 Cube::Cube() {
   SetupPieces();
 
+  //   func_map_.insert({0, "U", &Cube::U});
+  // func_map_.insert({1, "D", &Cube::D});
+  // func_map_.insert({2, "L", &Cube::L});
+  // func_map_.insert({3, "R", &Cube::R});
+  // func_map_.insert({4, "F", &Cube::F});
+  // func_map_.insert({5, "B", &Cube::B});
+
+  // func_map_.insert({6, "UI", &Cube::UI});
+  // func_map_.insert({7, "DI", &Cube::DI});
+  // func_map_.insert({8, "LI", &Cube::LI});
+  // func_map_.insert({9, "RI", &Cube::RI});
+  // func_map_.insert({10, "FI", &Cube::FI});
+  // func_map_.insert({11, "BI", &Cube::BI});
+
+  // func_map_.insert({12, "U2", &Cube::U2});
+  // func_map_.insert({13, "D2", &Cube::D2});
+  // func_map_.insert({14, "L2", &Cube::L2});
+  // func_map_.insert({15, "R2", &Cube::R2});
+  // func_map_.insert({16, "F2", &Cube::F2});
+  // func_map_.insert({17, "B2", &Cube::B2});
+
+  // func_map_.insert({18, "u", &Cube::u});
+  // func_map_.insert({19, "d", &Cube::d});
+  // func_map_.insert({20, "l", &Cube::l});
+  // func_map_.insert({21, "r", &Cube::r});
+  // func_map_.insert({22, "f", &Cube::f});
+  // func_map_.insert({23, "b", &Cube::b});
+
+  // func_map_.insert({24, "ui", &Cube::ui});
+  // func_map_.insert({25, "di", &Cube::di});
+  // func_map_.insert({26, "li", &Cube::li});
+  // func_map_.insert({27, "ri", &Cube::ri});
+  // func_map_.insert({28, "fi", &Cube::fi});
+  // func_map_.insert({29, "bi", &Cube::bi});
+
+  // func_map_.insert({30, "u2", &Cube::u2});
+  // func_map_.insert({31, "d2", &Cube::d2});
+  // func_map_.insert({32, "l2", &Cube::l2});
+  // func_map_.insert({33, "r2", &Cube::r2});
+  // func_map_.insert({34, "f2", &Cube::f2});
+  // func_map_.insert({35, "b2", &Cube::b2});
+
+  // func_map_.insert({36, "M", &Cube::M});
+  // func_map_.insert({37, "MI", &Cube::MI});
+  // func_map_.insert({38, "E", &Cube::E});
+  // func_map_.insert({39, "EI", &Cube::EI});
+  // func_map_.insert({40, "S", &Cube::S});
+  // func_map_.insert({41, "SI", &Cube::SI});
+
+  // func_map_.insert({42, "X", &Cube::X});
+  // func_map_.insert({43, "XI", &Cube::XI});
+  // func_map_.insert({44, "Y", &Cube::Y});
+  // func_map_.insert({45, "YI", &Cube::YI});
+  // func_map_.insert({46, "Z", &Cube::Z});
+  // func_map_.insert({47, "ZI", &Cube::ZI});
+
   std::string func_names[48] = {
     "U", "D", "L", "R", "F", "B",
     "UI", "DI", "LI", "RI", "FI", "BI",
@@ -22,64 +78,18 @@ Cube::Cube() {
 
   func_ptr funcs[48] = {
     &Cube::U, &Cube::D, &Cube::L, &Cube::R, &Cube::F, &Cube::B,
-};
+    &Cube::UI, &Cube::DI, &Cube::LI, &Cube::RI,&Cube::FI, &Cube::BI,
+    &Cube::U2, &Cube::D2, &Cube::L2, &Cube::R2, &Cube::F2, &Cube::B2,
+    &Cube::ui, &Cube::di, &Cube::li, &Cube::ri, &Cube::fi, &Cube::bi,
+    &Cube::u2, &Cube::d2, &Cube::l2, &Cube::r2, &Cube::f2, &Cube::b2,
+    &Cube::M, &Cube::MI, &Cube::E, &Cube::EI, &Cube::S, &Cube::SI,
+    &Cube::X, &Cube::XI, &Cube::Y, &Cube::YI, &Cube::Z, &Cube::ZI
+  };
 
-  func_map_.insert({0, "U", &Cube::U});
-  func_map_.insert({1, "D", &Cube::D});
-  func_map_.insert({2, "L", &Cube::L});
-  func_map_.insert({3, "R", &Cube::R});
-  func_map_.insert({4, "F", &Cube::F});
-  func_map_.insert({5, "B", &Cube::B});
-
-  func_map_.insert({6, "UI", &Cube::UI});
-  func_map_.insert({7, "DI", &Cube::DI});
-  func_map_.insert({8, "LI", &Cube::LI});
-  func_map_.insert({9, "RI", &Cube::RI});
-  func_map_.insert({10, "FI", &Cube::FI});
-  func_map_.insert({11, "BI", &Cube::BI});
-
-  func_map_.insert({12, "U2", &Cube::U2});
-  func_map_.insert({13, "D2", &Cube::D2});
-  func_map_.insert({14, "L2", &Cube::L2});
-  func_map_.insert({15, "R2", &Cube::R2});
-  func_map_.insert({16, "F2", &Cube::F2});
-  func_map_.insert({17, "B2", &Cube::B2});
-
-  func_map_.insert({18, "u", &Cube::u});
-  func_map_.insert({19, "d", &Cube::d});
-  func_map_.insert({20, "l", &Cube::l});
-  func_map_.insert({21, "r", &Cube::r});
-  func_map_.insert({22, "f", &Cube::f});
-  func_map_.insert({23, "b", &Cube::b});
-
-  func_map_.insert({24, "ui", &Cube::ui});
-  func_map_.insert({25, "di", &Cube::di});
-  func_map_.insert({26, "li", &Cube::li});
-  func_map_.insert({27, "ri", &Cube::ri});
-  func_map_.insert({28, "fi", &Cube::fi});
-  func_map_.insert({29, "bi", &Cube::bi});
-
-  func_map_.insert({30, "u2", &Cube::u2});
-  func_map_.insert({31, "d2", &Cube::d2});
-  func_map_.insert({32, "l2", &Cube::l2});
-  func_map_.insert({33, "r2", &Cube::r2});
-  func_map_.insert({34, "f2", &Cube::f2});
-  func_map_.insert({35, "b2", &Cube::b2});
-
-  func_map_.insert({36, "M", &Cube::M});
-  func_map_.insert({37, "MI", &Cube::MI});
-  func_map_.insert({38, "E", &Cube::E});
-  func_map_.insert({39, "EI", &Cube::EI});
-  func_map_.insert({40, "S", &Cube::S});
-  func_map_.insert({41, "SI", &Cube::SI});
-
-  func_map_.insert({42, "X", &Cube::X});
-  func_map_.insert({43, "XI", &Cube::XI});
-  func_map_.insert({44, "Y", &Cube::Y});
-  func_map_.insert({45, "YI", &Cube::YI});
-  func_map_.insert({46, "Z", &Cube::Z});
-  func_map_.insert({47, "ZI", &Cube::ZI});
-
+  for (int i = 0; i < 48; i++) {
+    func_map_.insert({i, func_names[i], funcs[i]});
+  }
+  
   srand(time(NULL));
 }
 
