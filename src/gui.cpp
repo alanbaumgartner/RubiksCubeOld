@@ -40,7 +40,7 @@ Gui::Gui(QWidget *parent)
         QString qstr = QString::fromStdString(str);
         buttons[i] = new QPushButton(qstr, this); 
         buttons[i]->setGeometry((i % 6 * 52) + 255, (i / 6 * 32) + 5, 48, 28);
-        connect(buttons[i], &QPushButton::clicked, this, [=, this]{ handle_button(i); });
+        connect(buttons[i], &QPushButton::clicked, this, [=]{ handle_button(i); });
     }
     update_cube();
 }

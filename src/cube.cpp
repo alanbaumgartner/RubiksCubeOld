@@ -9,6 +9,21 @@
 Cube::Cube() {
   SetupPieces();
 
+  std::string func_names[48] = {
+    "U", "D", "L", "R", "F", "B",
+    "UI", "DI", "LI", "RI", "FI", "BI",
+    "U2", "D2", "L2", "R2", "F2", "B2",
+    "u", "d", "l", "r", "f", "b",
+    "ui", "di", "li", "ri", "fi", "bi",
+    "u2", "d2", "l2", "r2", "f2", "b2",
+    "M", "MI", "E", "EI", "S", "SI",
+    "X", "XI", "Y", "YI", "Z", "ZI",
+  };
+
+  func_ptr funcs[48] = {
+    &Cube::U, &Cube::D, &Cube::L, &Cube::R, &Cube::F, &Cube::B,
+};
+
   func_map_.insert({0, "U", &Cube::U});
   func_map_.insert({1, "D", &Cube::D});
   func_map_.insert({2, "L", &Cube::L});
@@ -21,7 +36,7 @@ Cube::Cube() {
   func_map_.insert({8, "LI", &Cube::LI});
   func_map_.insert({9, "RI", &Cube::RI});
   func_map_.insert({10, "FI", &Cube::FI});
-  func_map_.insert({1, "BI", &Cube::BI});
+  func_map_.insert({11, "BI", &Cube::BI});
 
   func_map_.insert({12, "U2", &Cube::U2});
   func_map_.insert({13, "D2", &Cube::D2});
