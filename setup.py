@@ -37,8 +37,10 @@ if sys.argv[1] == "init":
     if platform.system() == "Windows":
         subprocess.run("bootstrap", shell=True)
     else:
-        subprocess.run("bootstrap.sh", shell=True)
-    subprocess.run("b2 headers", shell=True)
+        depends = "sudo apt-get install build-essential libgl1-mesa-dev"
+        subprocess.run(depends, shell=True)
+        subprocess.run("./bootstrap.sh", shell=True)
+    subprocess.run("./b2 headers", shell=True)
     os.chdir("../..")
 
 if sys.argv[1] == "release":

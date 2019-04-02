@@ -10,11 +10,11 @@ Gui::Gui(QWidget *parent)
     cube = new Cube();
 
     random = new QPushButton("Random", this); 
-    random->setGeometry(255 - 52, 6 * 32 + 5, 48, 28);
+    random->setGeometry(187, 6 * 32 + 5, 64, 28);
     connect(random, &QPushButton::clicked, this, [this]{ randomize_cube(); });
     
     reset = new QPushButton("Reset", this);
-    reset->setGeometry(255 - 52, 7 * 32 + 5, 48, 28);
+    reset->setGeometry(187, 7 * 32 + 5, 64, 28);
     connect(reset, &QPushButton::clicked, this, [this]{ reset_cube(); });
 
     for (int i = 0; i < 9; i++) {
