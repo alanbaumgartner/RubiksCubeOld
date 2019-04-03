@@ -44,74 +44,6 @@ Cube::~Cube() {
   }
 }
 
-void Cube::Print() {
-  sort();
-  std::string up = SideString(&UP, 1);
-  std::string down = SideString(&DOWN, 1);
-  std::string left = SideString(&LEFT, 0);
-  std::string right = SideString(&RIGHT, 0);
-  std::string front = SideString(&FRONT, 2);
-  std::string back = SideString(&BACK, 2);
-
-  for (int i = 0; i < 9; i+=3) {
-    std::cout << "      ";
-    PrintPiece(back.at(CWTURN(i, 2)));
-    PrintPiece(back.at(CWTURN(i, 1)));
-    PrintPiece(back.at(CWTURN(i, 0)));
-    std::cout << std::endl;
-  }
-
-  for (int i = 0; i < 9; i+=3) {
-    PrintPiece(left.at(CWTURN(i, 2)));
-    PrintPiece(left.at(CWTURN(i, 1)));
-    PrintPiece(left.at(CWTURN(i, 0)));
-
-    PrintPiece(up.at(CWTURN(i, 2)));
-    PrintPiece(up.at(CWTURN(i, 1)));
-    PrintPiece(up.at(CWTURN(i, 0)));
-
-    PrintPiece(right.at(CWTURN(i, 0)));
-    PrintPiece(right.at(CWTURN(i, 1)));
-    PrintPiece(right.at(CWTURN(i, 2)));
-
-    PrintPiece(down.at(CWTURN(i, 2)));
-    PrintPiece(down.at(CWTURN(i, 1)));
-    PrintPiece(down.at(CWTURN(i, 0)));
-    std::cout << std::endl;
-  }
-
-  for (int i = 0; i < 9; i+=3) {
-    std::cout << "      ";
-    PrintPiece(front.at(CCTURN(i, 0)));
-    PrintPiece(front.at(CCTURN(i, 1)));
-    PrintPiece(front.at(CCTURN(i, 2)));
-    std::cout << std::endl;
-  }
-  std::cout << std::endl;
-}
-
-void Cube::Play() {
-  std::string t;
-  Print();
-  while (std::cin >> t) {
-    if (t == "exit") {
-      return;
-    }
-    if (t == "reset") {
-      ResetPieces();
-    }
-    if (t == "random") {
-      Randomize();
-    }
-    auto& ibn = func_map_.get<IndexByName>();
-    auto found = ibn.find(t);
-    if (found != ibn.end()) {
-      (this->*found->func)();
-    }
-    Print();
-  }
-}
-
 void Cube::Solve() {}
 
 void Cube::U() {
@@ -554,31 +486,6 @@ int Cube::populate_map(const Eigen::Vector3i * plane, int position) {
     }
   }
   return max;
-}
-
-void Cube::PrintPiece(char color) {
-  switch (color) {
-    case '1':
-      std::cout << rang::fg::gray << char(254) << rang::fg::reset << " ";
-      break;
-    case '2':
-      std::cout << rang::fg::yellow << char(254) << rang::fg::reset << " ";
-      break;
-    case '3':
-      std::cout << rang::fg::magenta << char(254) << rang::fg::reset << " ";
-      break;
-    case '4':
-      std::cout << rang::fg::red << char(254) << rang::fg::reset << " ";
-      break;
-    case '5':
-      std::cout << rang::fg::green << char(254) << rang::fg::reset << " ";
-      break;
-    case '6':
-      std::cout << rang::fg::blue << char(254) << rang::fg::reset << " ";
-      break;
-    default:
-      break;
-  }
 }
 
 void Cube::ResetPieces() {

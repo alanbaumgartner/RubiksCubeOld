@@ -14,9 +14,6 @@ class Cube {
   Cube();
   ~Cube();
 
-  void Print();
-
-  void Play();
   void Solve();
 
   void U();
@@ -125,8 +122,6 @@ class Cube {
 
   bool InPlane(Piece * piece, const Eigen::Vector3i * plane);
   int populate_map(const Eigen::Vector3i * plane, int position);
-
-  void PrintPiece(char color);
 
   double SideScore(const Eigen::Vector3i * side, int pos);
   std::string SideString(const Eigen::Vector3i * side, int pos);

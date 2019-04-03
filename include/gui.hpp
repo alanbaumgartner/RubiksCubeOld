@@ -16,7 +16,7 @@ class Gui : public QWidget {
     Cube * cube;
     QPushButton * reset;
     QPushButton * random;
-    QPushButton * buttons[48];
+    QPushButton * buttons[50];
     QLabel * sides[54];
 
     void handle_button(int index);
