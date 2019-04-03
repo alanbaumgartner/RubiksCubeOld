@@ -7,28 +7,12 @@
 
 class Piece {
  public:
-  Piece();
-  Piece(Eigen::Vector3i pos, Eigen::Vector3i color) : pos_(pos), color_(color) {}
+  Piece(Eigen::Vector3i pos, Eigen::Vector3i color) :
+    pos_(pos), color_(color) {}
 
   void Rotate(const Eigen::Matrix3i * pos_dir, const Eigen::Matrix3i * color_dir);
 
-  static bool compare(Piece * lhs, Piece * rhs) {
-    if (lhs->pos_(0) < rhs->pos_(0)) {
-      return true;
-    }
-
-    if (lhs->pos_(0) == rhs->pos_(0)) {
-      if (lhs->pos_(1) < rhs->pos_(1)) {
-        return true;
-      }
-      if (lhs->pos_(1) == rhs->pos_(1)) {
-        if (lhs->pos_(2) < rhs->pos_(2)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
+  static bool compare(Piece * lhs, Piece * rhs);
 
   Eigen::Vector3i get_pos() {
     return pos_;

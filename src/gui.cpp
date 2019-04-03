@@ -19,41 +19,51 @@ Gui::Gui(QWidget *parent)
 
     cube = new Cube();
 
-    buttons[48] = new QPushButton("Random", this); 
+    buttons[48] = new QPushButton("Random", this);
     buttons[48]->setGeometry(187, 4 * 32 + 5, 64, 28);
-    connect(buttons[48], &QPushButton::clicked, this, [this]{ randomize_cube(); });
-    
+    connect(buttons[48], &QPushButton::clicked, this, [=]{ randomize_cube(); });
+
     buttons[49] = new QPushButton("Reset", this);
     buttons[49]->setGeometry(187, 5 * 32 + 5, 64, 28);
-    connect(buttons[49], &QPushButton::clicked, this, [this]{ reset_cube(); });
+    connect(buttons[49], &QPushButton::clicked, this, [=]{ reset_cube(); });
 
+    int x_pos;
+    int y_pos;
     for (int i = 0; i < 9; i++) {
-        sides[i] = new QLabel(this); 
-        sides[i]->setGeometry((i % 3 * 20) + 65, (i / 3 * 20) + 5, 16, 16);
+        x_pos = i % 3 * 20;
+        y_pos = i / 3 * 20;
+
+        // Back Pieces.
+        sides[i] = new QLabel(this);
+        sides[i]->setGeometry(x_pos + 65, y_pos + 5, 16, 16);
+
+        // Front Pieces.
+        sides[i + 45] = new QLabel(this);
+        sides[i + 45]->setGeometry(x_pos + 65, y_pos + 125, 16, 16);
     }
 
     for (int i = 0; i < 36; i++) {
-        sides[i + 9] = new QLabel(this); 
-        sides[i + 9]->setGeometry((i % 12 * 20) + 5, (i / 12 * 20) + 65, 16, 16);
-    }
-
-    for (int i = 0; i < 9; i++) {
-        sides[i + 45] = new QLabel(this); 
-        sides[i + 45]->setGeometry((i % 3 * 20) + 65, (i / 3 * 20) + 125, 16, 16);
+        x_pos = (i % 12 * 20);
+        y_pos = (i / 12 * 20);
+        // Left, Up, Right, Down Pieces.
+        sides[i + 9] = new QLabel(this);
+        sides[i + 9]->setGeometry(x_pos + 5, y_pos + 65, 16, 16);
     }
 
     for (int i = 0; i < 36; i++) {
+        x_pos = (i % 6 * 52);
+        y_pos = (i / 6 * 32);
         std::string str = cube->get_func_name(i);
         QString qstr = QString::fromStdString(str);
-        buttons[i] = new QPushButton(qstr, this); 
-        buttons[i]->setGeometry((i % 6 * 52) + 255, (i / 6 * 32) + 5, 48, 28);
-        connect(buttons[i], &QPushButton::clicked, this, [=]{ handle_button(i); });
+        buttons[i] = new QPushButton(qstr, this);
+        buttons[i]->setGeometry(x_pos + 255, y_pos + 5, 48, 28);
+        connect(buttons[i], &QPushButton::clicked, this, [=]{ rotate_cube(i); });
     }
-    
+
     update_cube();
 }
 
-void Gui::handle_button(int index) {
+void Gui::rotate_cube(int index) {
     cube->call_func_index(index);
     update_cube();
 }

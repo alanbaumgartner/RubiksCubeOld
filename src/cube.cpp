@@ -4,7 +4,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <iostream>
-#include <rang.hpp>
 
 Cube::Cube() {
   SetupPieces();
@@ -34,8 +33,6 @@ Cube::Cube() {
   for (int i = 0; i < 36; i++) {
     func_map_.insert({i, func_names[i], funcs[i]});
   }
-  
-  srand(time(NULL));
 }
 
 Cube::~Cube() {
@@ -421,13 +418,13 @@ std::string Cube::get_colors() {
 
 void Cube::Randomize() {
   for (int i = 0; i < 999; i++) {
-    call_func_index(rand() % 36);
+    call_func_index(rand_r(&seed_) % 36);
   }
   std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
 }
 
 double Cube::Score() {
-  double score = SideScore(&UP, 1) + SideScore(&DOWN, 1) + SideScore(&LEFT, 0) + SideScore(&RIGHT, 0) + SideScore(&FRONT, 2) + SideScore(&BACK, 2);
+  double score = SideScore(&UP, 1) + SideScore(&DOWN, 1) + SideScore(&LEFT, 0) + SideScore(&RIGHT, 0) +SideScore(&FRONT, 2) +SideScore(&BACK, 2);
   score = score/6;
   return score;
 }

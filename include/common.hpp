@@ -35,6 +35,18 @@ const Eigen::Matrix3i ROTATE_Y_CC((Eigen::Matrix3i() << COS(TWO_RAD), 0, SIN(TWO
 const Eigen::Matrix3i ROTATE_Z_CW((Eigen::Matrix3i() << COS(-TWO_RAD), -SIN(-TWO_RAD), 0, SIN(-TWO_RAD), COS(-TWO_RAD), 0, 0, 0, 1).finished());
 const Eigen::Matrix3i ROTATE_Z_CC((Eigen::Matrix3i() << COS(TWO_RAD), -SIN(TWO_RAD), 0, SIN(TWO_RAD), COS(TWO_RAD), 0, 0, 0, 1).finished());
 
-const Eigen::Matrix3i ROTATE_COLOR_X((Eigen::Matrix3i() << 1, 0, 0, 0, 0, 1, 0, 1, 0).finished());
-const Eigen::Matrix3i ROTATE_COLOR_Y((Eigen::Matrix3i() << 0, 0, 1, 0, 1, 0, 1, 0, 0).finished());
-const Eigen::Matrix3i ROTATE_COLOR_Z((Eigen::Matrix3i() << 0, 1, 0, 1, 0, 0, 0, 0, 1).finished());
+const Eigen::Matrix3i ROTATE_COLOR_X((Eigen::Matrix3i() <<
+1, 0, 0,
+0, 0, 1,
+0, 1, 0).finished());
+
+const Eigen::Matrix3i ROTATE_COLOR_Y((Eigen::Matrix3i() <<
+0, 0, 1,
+0, 1, 0,
+1, 0, 0).finished());
+
+const Eigen::Matrix3i ROTATE_COLOR_Z((Eigen::Matrix3i() <<
+0, 1, 0,
+1, 0, 0,
+0, 0, 1).finished());
+

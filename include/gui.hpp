@@ -8,20 +8,17 @@
 #include "cube.hpp"
 
 class Gui : public QWidget {
-    
-  public:
-    Gui(QWidget *parent = 0);
+ public:
+  explicit Gui(QWidget *parent = 0);
 
-  private:
-    Cube * cube;
-    QPushButton * reset;
-    QPushButton * random;
-    QPushButton * buttons[50];
-    QLabel * sides[54];
+ private:
+  Cube * cube;
+  QPushButton * buttons[50];
+  QLabel * sides[54];
 
-    void handle_button(int index);
-    void reset_cube();
-    void randomize_cube();
-    void update_cube();
-    void set_color(int index, char color);
+  void rotate_cube(int index);
+  void reset_cube();
+  void randomize_cube();
+  void update_cube();
+  void set_color(int index, char color);
 };

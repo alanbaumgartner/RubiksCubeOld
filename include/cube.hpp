@@ -91,7 +91,7 @@ class Cube {
 
 
  private:
-   typedef void (Cube::*func_ptr)();
+  typedef void (Cube::*func_ptr)();
 
   struct func_struct {
     int index;
@@ -119,6 +119,8 @@ class Cube {
   Container func_map_;
 
   Piece * pieces_[26];
+
+  unsigned int seed_;
 
   bool InPlane(Piece * piece, const Eigen::Vector3i * plane);
   int populate_map(const Eigen::Vector3i * plane, int position);
