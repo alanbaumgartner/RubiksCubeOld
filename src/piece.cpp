@@ -3,25 +3,30 @@
 #include "piece.hpp"
 
 bool Piece::compare(Piece * lhs, Piece * rhs) {
-if (lhs->pos_(0) < rhs->pos_(0)) {
-    return true;
-}
-
-if (lhs->pos_(0) == rhs->pos_(0)) {
-    if (lhs->pos_(1) < rhs->pos_(1)) {
-    return true;
-    }
-    if (lhs->pos_(1) == rhs->pos_(1)) {
-    if (lhs->pos_(2) < rhs->pos_(2)) {
+    if (lhs->get_pos()(0) < rhs->get_pos()(0)) {
         return true;
     }
+
+    if (lhs->get_pos()(0) == rhs->get_pos()(0)) {
+        if (lhs->get_pos()(1) < rhs->get_pos()(1)) {
+        return true;
+        }
+        if (lhs->get_pos()(1) == rhs->get_pos()(1)) {
+        if (lhs->get_pos()(2) < rhs->get_pos()(2)) {
+            return true;
+        }
+        }
     }
-}
-return false;
+    return false;
 }
 
 void Piece::Rotate(const Eigen::Matrix3i * pos_dir, const Eigen::Matrix3i * color_dir) {
+    lock_.lock();
     pos_ = *pos_dir * pos_;
     color_ = *color_dir * color_;
+    lock_.unlock();
 }
 
+bool Piece::InPlane(const Eigen::Vector3i * plane) {
+    return get_pos().dot(*plane) > 0;
+}

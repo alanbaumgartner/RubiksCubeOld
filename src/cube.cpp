@@ -8,6 +8,8 @@
 Cube::Cube() {
   SetupPieces();
 
+  srand(time(nullptr));
+
   std::string func_names[36] = {
     "U",  "D",  "L",  "R",  "F",  "B",
     "UI", "DI", "LI", "RI", "FI", "BI",
@@ -37,7 +39,7 @@ Cube::Cube() {
 
 Cube::~Cube() {
   for (int i = 0; i < 26; i++) {
-    delete pieces_[i];
+    pieces_[i].reset();
   }
 }
 
@@ -45,7 +47,7 @@ void Cube::Solve() {}
 
 void Cube::U() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &UP)) {
+    if (pieces_[i]->InPlane(&UP)) {
       pieces_[i]->Rotate(&ROTATE_Y_CW, &ROTATE_COLOR_Y);
     }
   }
@@ -53,7 +55,7 @@ void Cube::U() {
 
 void Cube::D() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &DOWN)) {
+    if (pieces_[i]->InPlane(&DOWN)) {
       pieces_[i]->Rotate(&ROTATE_Y_CC, &ROTATE_COLOR_Y);
     }
   }
@@ -61,7 +63,7 @@ void Cube::D() {
 
 void Cube::L() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &LEFT)) {
+    if (pieces_[i]->InPlane(&LEFT)) {
       pieces_[i]->Rotate(&ROTATE_X_CW, &ROTATE_COLOR_X);
     }
   }
@@ -69,7 +71,7 @@ void Cube::L() {
 
 void Cube::R() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &RIGHT)) {
+    if (pieces_[i]->InPlane(&RIGHT)) {
       pieces_[i]->Rotate(&ROTATE_X_CC, &ROTATE_COLOR_X);
     }
   }
@@ -77,7 +79,7 @@ void Cube::R() {
 
 void Cube::F() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &FRONT)) {
+    if (pieces_[i]->InPlane(&FRONT)) {
       pieces_[i]->Rotate(&ROTATE_Z_CW, &ROTATE_COLOR_Z);
     }
   }
@@ -85,7 +87,7 @@ void Cube::F() {
 
 void Cube::B() {
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], &BACK)) {
+    if (pieces_[i]->InPlane(&BACK)) {
       pieces_[i]->Rotate(&ROTATE_Z_CC, &ROTATE_COLOR_Z);
     }
   }
@@ -126,7 +128,7 @@ void Cube::UI() {
   U();
   U();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], UP)) {
+  //   if (pieces_[i]->InPlane(UP)) {
   //     pieces_[i]->Rotate(ROTATE_Y_CC);
   //   }
   // }
@@ -137,7 +139,7 @@ void Cube::DI() {
   D();
   D();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], DOWN)) {
+  //   if (pieces_[i]->InPlane(DOWN)) {
   //     pieces_[i]->Rotate(ROTATE_Y_CW);
   //   }
   // }
@@ -148,7 +150,7 @@ void Cube::LI() {
   L();
   L();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], LEFT)) {
+  //   if (pieces_[i]->InPlane(LEFT)) {
   //     pieces_[i]->Rotate(ROTATE_X_CC);
   //   }
   // }
@@ -159,7 +161,7 @@ void Cube::RI() {
   R();
   R();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], RIGHT)) {
+  //   if (pieces_[i]->InPlane(RIGHT)) {
   //     pieces_[i]->Rotate(ROTATE_X_CW);
   //   }
   // }
@@ -170,7 +172,7 @@ void Cube::FI() {
   F();
   F();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], FRONT)) {
+  //   if (pieces_[i]->InPlane(FRONT)) {
   //     pieces_[i]->Rotate(ROTATE_Z_CC);
   //   }
   // }
@@ -181,7 +183,7 @@ void Cube::BI() {
   B();
   B();
   // for (int i = 0; i < 26; i++) {
-  //   if (InPlane(pieces_[i], BACK)) {
+  //   if (pieces_[i]->InPlane(BACK)) {
   //     pieces_[i]->Rotate(ROTATE_Z_CW);
   //   }
   // }
@@ -418,7 +420,7 @@ std::string Cube::get_colors() {
 
 void Cube::Randomize() {
   for (int i = 0; i < 999; i++) {
-    call_func_index(rand_r(&seed_) % 36);
+    call_func_index(rand() % 36);
   }
   std::sort(std::begin(pieces_), std::end(pieces_), Piece::compare);
 }
@@ -461,16 +463,11 @@ void Cube::call_func_string(std::string name) {
   }
 }
 
-
-bool Cube::InPlane(Piece * piece, const Eigen::Vector3i * plane) {
-  return piece->get_pos().dot(*plane) > 0;
-}
-
 int Cube::populate_map(const Eigen::Vector3i * plane, int position) {
   std::map<int, int> vals;
   int max = 0;
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], plane)) {
+    if (pieces_[i]->InPlane(plane)) {
       int color = pieces_[i]->get_color()(position);
       if (vals.find(color) == vals.end()) {
         vals[color] = 1;
@@ -487,7 +484,7 @@ int Cube::populate_map(const Eigen::Vector3i * plane, int position) {
 
 void Cube::ResetPieces() {
   for (int i = 0; i < 26; i++) {
-    delete pieces_[i];
+    pieces_[i].reset();
   }
   SetupPieces();
 }
@@ -500,7 +497,7 @@ double Cube::SideScore(const Eigen::Vector3i * side, int pos) {
 std::string Cube::SideString(const Eigen::Vector3i * side, int pos) {
   std::string list = "";
   for (int i = 0; i < 26; i++) {
-    if (InPlane(pieces_[i], side)) {
+    if (pieces_[i]->InPlane(side)) {
       list += std::to_string(pieces_[i]->get_color()(pos));
     }
   }
@@ -508,30 +505,30 @@ std::string Cube::SideString(const Eigen::Vector3i * side, int pos) {
 }
 
 void Cube::SetupPieces() {
-  pieces_[0] = new Piece(UP, WHITE);
-  pieces_[1] = new Piece(UP + LEFT, WHITE + ORANGE);
-  pieces_[2] = new Piece(UP + RIGHT, WHITE + RED);
-  pieces_[3] = new Piece(UP + FRONT, WHITE + GREEN);
-  pieces_[4] = new Piece(UP + BACK, WHITE + BLUE);
-  pieces_[5] = new Piece(UP + LEFT + FRONT, WHITE + ORANGE + GREEN);
-  pieces_[6] = new Piece(UP + LEFT + BACK, WHITE + ORANGE + BLUE);
-  pieces_[7] = new Piece(UP + RIGHT + FRONT, WHITE + RED + GREEN);
-  pieces_[8] = new Piece(UP + RIGHT + BACK, WHITE + RED + BLUE);
-  pieces_[9] = new Piece(DOWN, YELLOW);
-  pieces_[10] = new Piece(DOWN + LEFT, YELLOW + ORANGE);
-  pieces_[11] = new Piece(DOWN + RIGHT, YELLOW + RED);
-  pieces_[12] = new Piece(DOWN + FRONT, YELLOW + GREEN);
-  pieces_[13] = new Piece(DOWN + BACK, YELLOW + BLUE);
-  pieces_[14] = new Piece(DOWN + LEFT + FRONT, YELLOW + ORANGE + GREEN);
-  pieces_[15] = new Piece(DOWN + LEFT + BACK, YELLOW + ORANGE + BLUE);
-  pieces_[16] = new Piece(DOWN + RIGHT + FRONT, YELLOW + RED + GREEN);
-  pieces_[17] = new Piece(DOWN + RIGHT + BACK, YELLOW + RED + BLUE);
-  pieces_[18] = new Piece(LEFT, ORANGE);
-  pieces_[19] = new Piece(RIGHT, RED);
-  pieces_[20] = new Piece(FRONT, GREEN);
-  pieces_[21] = new Piece(BACK, BLUE);
-  pieces_[22] = new Piece(LEFT + FRONT, ORANGE + GREEN);
-  pieces_[23] = new Piece(RIGHT + FRONT, RED + GREEN);
-  pieces_[24] = new Piece(LEFT + BACK, ORANGE + BLUE);
-  pieces_[25] = new Piece(RIGHT + BACK, RED + BLUE);
+  pieces_[0] = std::make_shared<Piece>(UP, WHITE);
+  pieces_[1] = std::make_shared<Piece>(UP + LEFT, WHITE + ORANGE);
+  pieces_[2] = std::make_shared<Piece>(UP + RIGHT, WHITE + RED);
+  pieces_[3] = std::make_shared<Piece>(UP + FRONT, WHITE + GREEN);
+  pieces_[4] = std::make_shared<Piece>(UP + BACK, WHITE + BLUE);
+  pieces_[5] = std::make_shared<Piece>(UP + LEFT + FRONT, WHITE + ORANGE + GREEN);
+  pieces_[6] = std::make_shared<Piece>(UP + LEFT + BACK, WHITE + ORANGE + BLUE);
+  pieces_[7] = std::make_shared<Piece>(UP + RIGHT + FRONT, WHITE + RED + GREEN);
+  pieces_[8] = std::make_shared<Piece>(UP + RIGHT + BACK, WHITE + RED + BLUE);
+  pieces_[9] = std::make_shared<Piece>(DOWN, YELLOW);
+  pieces_[10] = std::make_shared<Piece>(DOWN + LEFT, YELLOW + ORANGE);
+  pieces_[11] = std::make_shared<Piece>(DOWN + RIGHT, YELLOW + RED);
+  pieces_[12] = std::make_shared<Piece>(DOWN + FRONT, YELLOW + GREEN);
+  pieces_[13] = std::make_shared<Piece>(DOWN + BACK, YELLOW + BLUE);
+  pieces_[14] = std::make_shared<Piece>(DOWN + LEFT + FRONT, YELLOW + ORANGE + GREEN);
+  pieces_[15] = std::make_shared<Piece>(DOWN + LEFT + BACK, YELLOW + ORANGE + BLUE);
+  pieces_[16] = std::make_shared<Piece>(DOWN + RIGHT + FRONT, YELLOW + RED + GREEN);
+  pieces_[17] = std::make_shared<Piece>(DOWN + RIGHT + BACK, YELLOW + RED + BLUE);
+  pieces_[18] = std::make_shared<Piece>(LEFT, ORANGE);
+  pieces_[19] = std::make_shared<Piece>(RIGHT, RED);
+  pieces_[20] = std::make_shared<Piece>(FRONT, GREEN);
+  pieces_[21] = std::make_shared<Piece>(BACK, BLUE);
+  pieces_[22] = std::make_shared<Piece>(LEFT + FRONT, ORANGE + GREEN);
+  pieces_[23] = std::make_shared<Piece>(RIGHT + FRONT, RED + GREEN);
+  pieces_[24] = std::make_shared<Piece>(LEFT + BACK, ORANGE + BLUE);
+  pieces_[25] = std::make_shared<Piece>(RIGHT + BACK, RED + BLUE);
 }

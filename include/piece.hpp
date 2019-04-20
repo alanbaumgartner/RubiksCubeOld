@@ -3,6 +3,7 @@
 #pragma once
 
 #include <iostream>
+#include <mutex>
 #include "common.hpp"
 
 class Piece {
@@ -14,15 +15,18 @@ class Piece {
 
   static bool compare(Piece * lhs, Piece * rhs);
 
-  Eigen::Vector3i get_pos() {
+  bool InPlane(const Eigen::Vector3i * plane);
+
+  Eigen::Vector3i get_pos() const {
     return pos_;
   }
 
-  Eigen::Vector3i get_color() {
+  Eigen::Vector3i get_color() const {
     return color_;
   }
 
  private:
+  std::mutex lock_;
   Eigen::Vector3i pos_;
   Eigen::Vector3i color_;
 };

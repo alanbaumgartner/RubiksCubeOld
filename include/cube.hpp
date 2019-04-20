@@ -14,7 +14,7 @@ class Cube {
   Cube();
   ~Cube();
 
-  void Solve();
+  void Solve() = delete;
 
   void U();
   void D();
@@ -79,7 +79,7 @@ class Cube {
   double Score();
   bool Solved();
 
-  Piece ** get_pieces() {
+  std::shared_ptr<Piece>* get_pieces() {
     return pieces_;
   }
 
@@ -91,7 +91,7 @@ class Cube {
 
 
  private:
-  typedef void (Cube::*func_ptr)();
+  using func_ptr = void (Cube::*)();
 
   struct func_struct {
     int index;
@@ -118,11 +118,10 @@ class Cube {
 
   Container func_map_;
 
-  Piece * pieces_[26];
+  std::shared_ptr<Piece> pieces_[26];
 
   unsigned int seed_;
 
-  bool InPlane(Piece * piece, const Eigen::Vector3i * plane);
   int populate_map(const Eigen::Vector3i * plane, int position);
 
   double SideScore(const Eigen::Vector3i * side, int pos);
