@@ -3,6 +3,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include "common.hpp"
 
@@ -13,7 +14,7 @@ class Piece {
 
   void Rotate(const Eigen::Matrix3i * pos_dir, const Eigen::Matrix3i * color_dir);
 
-  static bool compare(Piece * lhs, Piece * rhs);
+  static bool compare(std::shared_ptr<Piece> lhs, std::shared_ptr<Piece> rhs);
 
   bool InPlane(const Eigen::Vector3i * plane);
 

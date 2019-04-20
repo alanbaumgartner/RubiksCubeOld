@@ -2,7 +2,7 @@
 
 #include "piece.hpp"
 
-bool Piece::compare(Piece * lhs, Piece * rhs) {
+bool Piece::compare(std::shared_ptr<Piece> lhs, std::shared_ptr<Piece> rhs) {
     if (lhs->get_pos()(0) < rhs->get_pos()(0)) {
         return true;
     }

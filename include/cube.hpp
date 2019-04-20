@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include "piece.hpp"
 #include <boost/multi_index_container.hpp>
@@ -14,7 +15,7 @@ class Cube {
   Cube();
   ~Cube();
 
-  void Solve() = delete;
+  void Solve();
 
   void U();
   void D();

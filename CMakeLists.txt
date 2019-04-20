@@ -18,7 +18,7 @@ file(GLOB SOURCES src/*.cpp)
 if (UNIX)
     add_executable(RubiksCube ${SOURCES})
     if (CMAKE_BUILD_TYPE EQUAL "RELEASE")
-        target_compile_options(RubiksCube PRIVATE -std=c++11 -Wall -Ofast)
+        target_compile_options(RubiksCube PRIVATE -std=c++17 -Wall -Wextra -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict -Wnull-dereference -Wold-style-cast -Wuseless-cast -Wjump-misses-init -Wdouble-promotion -Wshadow -Wformat=2 -Ofast)
     endif (CMAKE_BUILD_TYPE EQUAL "RELEASE")
 endif (UNIX)
 
