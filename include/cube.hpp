@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <memory>
 #include <string>
 #include "piece.hpp"
 #include <boost/multi_index_container.hpp>
@@ -15,7 +14,7 @@ class Cube {
   Cube();
   ~Cube();
 
-  void Solve();
+  void Solve() = delete;
 
   void U();
   void D();
@@ -80,7 +79,7 @@ class Cube {
   double Score();
   bool Solved();
 
-  std::shared_ptr<Piece>* get_pieces() {
+  std::shared_ptr<Piece> * get_pieces() {
     return pieces_;
   }
 
@@ -120,8 +119,6 @@ class Cube {
   Container func_map_;
 
   std::shared_ptr<Piece> pieces_[26];
-
-  unsigned int seed_;
 
   int populate_map(const Eigen::Vector3i * plane, int position);
 

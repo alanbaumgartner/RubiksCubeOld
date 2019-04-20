@@ -43,8 +43,6 @@ Cube::~Cube() {
   }
 }
 
-void Cube::Solve() {}
-
 void Cube::U() {
   for (int i = 0; i < 26; i++) {
     if (pieces_[i]->InPlane(&UP)) {

@@ -9,8 +9,7 @@
 
 class Piece {
  public:
-  Piece(Eigen::Vector3i pos, Eigen::Vector3i color) :
-    pos_(pos), color_(color) {}
+  Piece(Eigen::Vector3i pos, Eigen::Vector3i color) : pos_(pos), color_(color) {}
 
   void Rotate(const Eigen::Matrix3i * pos_dir, const Eigen::Matrix3i * color_dir);
 
