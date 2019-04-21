@@ -4,7 +4,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-#include <QLabel>
+#include "color_object.hpp"
 #include "cube.hpp"
 
 class Gui : public QWidget {
@@ -14,7 +14,7 @@ class Gui : public QWidget {
  private:
   Cube * cube;
   QPushButton * buttons[50];
-  QLabel * sides[54];
+  ColorObject * sides[54];
 
   void rotate_cube(int index);
   void reset_cube();

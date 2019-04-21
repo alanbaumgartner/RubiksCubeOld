@@ -14,8 +14,7 @@ static std::unordered_map<char, QString> color_map = {
     {'6', "QLabel { background-color : blue; }"},
 };
 
-Gui::Gui(QWidget *parent)
-    : QWidget(parent) {
+Gui::Gui(QWidget *parent) : QWidget(parent) {
 
     cube = new Cube();
 
